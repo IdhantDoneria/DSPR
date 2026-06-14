@@ -31,12 +31,22 @@ export function Hero() {
         className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(120% 90% at 50% 8%, #15120c 0%, #0a0907 55%), radial-gradient(80% 60% at 80% 100%, rgba(198,166,100,0.10), transparent 60%)",
+            "radial-gradient(120% 90% at 50% 8%, #F8F6F0 0%, #F4F1EA 55%), radial-gradient(80% 60% at 80% 100%, rgba(185,139,58,0.10), transparent 60%)",
         }}
       />
 
       {/* GPU particle universe (skipped for reduced-motion users). */}
       {!reduced && <HeroCanvas quality={isMobile ? "low" : "high"} />}
+
+      {/* Soft cream halo keeps the wordmark legible over the woven ribbons. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute left-1/2 top-1/2 z-[5] h-[80vmin] w-[80vmin] -translate-x-1/2 -translate-y-1/2 rounded-full"
+        style={{
+          background:
+            "radial-gradient(closest-side, rgba(244,241,234,0.78), rgba(244,241,234,0.32) 55%, transparent 75%)",
+        }}
+      />
 
       {/* Foreground composition */}
       <div className="container-luxe relative z-10 flex flex-col items-center text-center">
@@ -56,7 +66,7 @@ export function Hero() {
           className="mt-6 font-display text-display-lg font-semibold leading-none"
         >
           <span className="sr-only">DSPR</span>
-          <span aria-hidden className="text-gradient-gold">
+          <span aria-hidden className="text-gradient-indigo">
             DSPR
           </span>
         </motion.h1>
@@ -65,7 +75,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={isLoaded ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 1, ease, delay: 0.6 }}
-          className="mt-4 max-w-xl font-display text-xl italic text-ivory-dim sm:text-2xl"
+          className="mt-4 max-w-xl font-display text-xl italic text-indigo-deep sm:text-2xl"
         >
           {SITE.tagline}
         </motion.p>
@@ -74,7 +84,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={isLoaded ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 1, ease, delay: 0.75 }}
-          className="mt-6 max-w-md text-sm leading-relaxed text-ivory-mute"
+          className="mt-6 max-w-md text-sm leading-relaxed text-ink-dim"
         >
           A boutique agency of storytellers and strategists, shaping brand
           narratives across luxury, hospitality, weddings &amp; travel.
@@ -86,7 +96,7 @@ export function Hero() {
         initial={{ opacity: 0 }}
         animate={isLoaded ? { opacity: 1 } : {}}
         transition={{ duration: 1, ease, delay: 1 }}
-        className="container-luxe absolute inset-x-0 bottom-8 z-10 flex items-end justify-between text-xs uppercase tracking-widest text-ivory-mute"
+        className="container-luxe absolute inset-x-0 bottom-8 z-10 flex items-end justify-between text-xs uppercase tracking-widest text-ink-mute"
       >
         <span className="hidden sm:block">Est. {SITE.activeSince}</span>
 
@@ -96,7 +106,7 @@ export function Hero() {
           aria-label="Scroll to explore"
         >
           <span>Scroll</span>
-          <span className="relative h-10 w-px overflow-hidden bg-ivory/20">
+          <span className="relative h-10 w-px overflow-hidden bg-indigo/20">
             <span className="absolute inset-x-0 top-0 h-1/2 w-px animate-[float_2s_ease-in-out_infinite] bg-gold" />
           </span>
         </button>

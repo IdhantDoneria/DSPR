@@ -65,11 +65,11 @@ export function Cursor() {
     if (!ring || !dot || !labelEl) return;
 
     const config: Record<string, { scale: number; border: string; bg: string; dot: number }> = {
-      default: { scale: 1, border: "rgba(244,239,230,0.5)", bg: "transparent", dot: 1 },
-      hover: { scale: 1.8, border: "rgba(198,166,100,0.9)", bg: "rgba(198,166,100,0.08)", dot: 0 },
-      view: { scale: 3.6, border: "rgba(198,166,100,0)", bg: "rgba(198,166,100,0.95)", dot: 0 },
-      drag: { scale: 3.6, border: "rgba(198,166,100,0)", bg: "rgba(198,166,100,0.95)", dot: 0 },
-      text: { scale: 0.6, border: "rgba(244,239,230,0.9)", bg: "transparent", dot: 0 },
+      default: { scale: 1, border: "rgba(46,43,115,0.5)", bg: "transparent", dot: 1 },
+      hover: { scale: 1.8, border: "rgba(46,43,115,0.9)", bg: "rgba(46,43,115,0.08)", dot: 0 },
+      view: { scale: 3.6, border: "rgba(46,43,115,0)", bg: "rgba(46,43,115,0.95)", dot: 0 },
+      drag: { scale: 3.6, border: "rgba(46,43,115,0)", bg: "rgba(46,43,115,0.95)", dot: 0 },
+      text: { scale: 0.6, border: "rgba(46,43,115,0.9)", bg: "transparent", dot: 0 },
     };
     const c = config[variant] ?? config.default;
 
@@ -92,18 +92,18 @@ export function Cursor() {
       <div
         ref={ringRef}
         className="absolute left-0 top-0 flex h-10 w-10 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border opacity-0 will-change-transform"
-        style={{ borderColor: "rgba(244,239,230,0.5)" }}
+        style={{ borderColor: "rgba(46,43,115,0.5)" }}
       >
         <div
           ref={labelRef}
-          className="select-none text-[9px] font-medium uppercase tracking-widest text-ink opacity-0"
+          className="select-none text-[9px] font-medium uppercase tracking-widest text-canvas opacity-0"
         >
           {label}
         </div>
       </div>
       <div
         ref={dotRef}
-        className="absolute left-0 top-0 h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gold opacity-0 will-change-transform"
+        className="absolute left-0 top-0 h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-indigo opacity-0 will-change-transform"
       />
     </div>
   );

@@ -9,24 +9,42 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        /* Warm editorial luxury palette */
-        ink: {
-          DEFAULT: "#0A0907", // near-black canvas, warm
-          900: "#0A0907",
-          800: "#12100C",
-          700: "#1A1712",
-          600: "#262119",
-          500: "#3A332A",
+        /* DSPR editorial palette — silk-cream canvas, royal indigo, warm gold.
+         * Mirrors the live dspr.in identity: light fabric ground, deep violet
+         * section rules, amber/gold magazine warmth, near-black serif type. */
+        canvas: {
+          DEFAULT: "#F4F1EA", // silk cream ground
+          warm: "#EFE9DC", // warmer parchment
+          cool: "#FAF8F3", // near-white highlight
+          shade: "#E7E1D4", // soft fabric shadow
         },
-        ivory: {
-          DEFAULT: "#F4EFE6",
-          dim: "#C9C2B5",
-          mute: "#8C857A",
+        ink: {
+          DEFAULT: "#16151A", // near-black, faintly cool — primary text
+          900: "#16151A",
+          800: "#23222A",
+          700: "#3A3844",
+          600: "#5A5766",
+          500: "#7C7888",
+          dim: "#6E6A5E", // muted warm gray on cream
+          mute: "#9A958A",
+        },
+        indigo: {
+          DEFAULT: "#2E2B73", // signature royal indigo (section rules)
+          light: "#4A46A8",
+          glow: "#6C67D6",
+          deep: "#1C1A47",
         },
         gold: {
-          DEFAULT: "#C6A664", // champagne gold accent
-          light: "#E4D2A4",
-          deep: "#9C7E45",
+          DEFAULT: "#B98B3A", // warm amber-gold (legible on cream)
+          light: "#D9A94B",
+          amber: "#D9892F", // magazine / briefcase warmth
+          deep: "#8C6420",
+        },
+        /* Kept for backwards-compat with any dark-on-light inversions */
+        ivory: {
+          DEFAULT: "#F4F1EA",
+          dim: "#6E6A5E",
+          mute: "#9A958A",
         },
       },
       fontFamily: {
@@ -77,12 +95,28 @@ const config: Config = {
         shimmer: {
           "100%": { transform: "translateX(100%)" },
         },
+        "silk-sheen": {
+          "0%, 100%": { backgroundPosition: "0% 50%" },
+          "50%": { backgroundPosition: "100% 50%" },
+        },
+        "rule-pulse": {
+          "0%, 100%": { opacity: "0.55" },
+          "50%": { opacity: "1" },
+        },
       },
       animation: {
         "marquee-left": "marquee-left var(--marquee-duration, 40s) linear infinite",
         "marquee-right": "marquee-right var(--marquee-duration, 40s) linear infinite",
         float: "float 6s ease-in-out infinite",
         "fade-in": "fade-in 1s ease forwards",
+        "silk-sheen": "silk-sheen 18s ease-in-out infinite",
+        "rule-pulse": "rule-pulse 5s ease-in-out infinite",
+      },
+      backgroundImage: {
+        "silk-radial":
+          "radial-gradient(120% 80% at 50% -10%, #FAF8F3 0%, #F4F1EA 40%, #E7E1D4 100%)",
+        "indigo-rule":
+          "linear-gradient(90deg, transparent, #2E2B73 18%, #4A46A8 50%, #2E2B73 82%, transparent)",
       },
     },
   },

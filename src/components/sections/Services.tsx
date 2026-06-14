@@ -37,12 +37,12 @@ export function Services() {
                     onFocus={() => setActive(i)}
                     onClick={() => setActive(i)}
                     aria-pressed={isActive}
-                    className="group relative flex w-full items-center gap-5 border-b border-ink-600 py-6 text-left transition-colors"
+                    className="group relative flex w-full items-center gap-5 border-b border-indigo/15 py-6 text-left transition-colors"
                   >
                     <span
                       className={cn(
                         "font-display text-sm transition-colors",
-                        isActive ? "text-gold" : "text-ivory-mute"
+                        isActive ? "text-gradient-gold" : "text-ink-mute"
                       )}
                     >
                       {s.index}
@@ -51,15 +51,15 @@ export function Services() {
                       className={cn(
                         "font-display text-3xl transition-all duration-500 ease-luxe sm:text-4xl",
                         isActive
-                          ? "translate-x-2 text-ivory"
-                          : "text-ivory-mute group-hover:text-ivory-dim"
+                          ? "translate-x-2 text-indigo-deep"
+                          : "text-ink-mute group-hover:text-ink-dim"
                       )}
                     >
                       {s.title}
                     </span>
                     <span
                       className={cn(
-                        "ml-auto h-px bg-gold transition-all duration-500 ease-luxe",
+                        "ml-auto h-px bg-indigo transition-all duration-500 ease-luxe",
                         isActive ? "w-12 opacity-100" : "w-0 opacity-0"
                       )}
                     />
@@ -85,7 +85,7 @@ export function Services() {
                   transition={{ duration: 0.5, ease }}
                   className="mt-4"
                 >
-                  <p className="font-display text-2xl italic text-gold-light">
+                  <p className="font-display text-2xl italic text-gradient-gold">
                     {service.tagline}
                   </p>
                   <ul className="mt-6 flex flex-wrap gap-2">
@@ -95,7 +95,7 @@ export function Services() {
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.4, delay: i * 0.05, ease }}
-                        className="rounded-full border border-ink-600 px-4 py-2 text-sm text-ivory-dim transition-colors hover:border-gold/50 hover:text-ivory"
+                        className="rounded-full border border-indigo/15 px-4 py-2 text-sm text-ink-dim transition-colors hover:border-indigo/50 hover:text-indigo-deep"
                       >
                         {item}
                       </motion.li>

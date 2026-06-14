@@ -41,7 +41,7 @@ export function Founder() {
             <MediaFrame
               alt="Digisha Shah — secondary portrait"
               monogram="DS"
-              className="ring-1 ring-ink-500"
+              className="ring-1 ring-indigo/15"
             />
           </motion.div>
 
@@ -51,13 +51,13 @@ export function Founder() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-10%" }}
             transition={{ duration: 0.9, ease, delay: 0.2 }}
-            className="glass absolute -left-4 top-8 z-30 rounded-xl px-5 py-4"
+            className="glass absolute -left-4 top-8 z-30 rounded-xl px-5 py-4 shadow-[0_18px_50px_-28px_rgba(28,26,71,0.35)]"
           >
             <CountUp
               value="100+"
-              className="font-display text-3xl text-gold"
+              className="font-display text-3xl text-gradient-gold"
             />
-            <p className="mt-1 text-xs uppercase tracking-widest text-ivory-dim">
+            <p className="mt-1 text-xs uppercase tracking-widest text-ink-mute">
               Brands shaped
             </p>
           </motion.div>
@@ -66,7 +66,7 @@ export function Founder() {
         {/* Narrative */}
         <div className="lg:col-span-6 lg:col-start-7">
           <div className="mb-3 flex items-center gap-3">
-            <span className="h-px w-8 bg-gold/60" />
+            <span className="h-px w-8 bg-indigo/50" />
             <span className="eyebrow">{FOUNDER.heading}</span>
           </div>
 
@@ -75,7 +75,7 @@ export function Founder() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-10%" }}
             transition={{ duration: 1, ease }}
-            className="font-display text-display-sm font-medium"
+            className="font-display italic text-display-sm font-medium text-indigo-deep"
           >
             {FOUNDER.name}
           </motion.h2>
@@ -89,10 +89,10 @@ export function Founder() {
                 viewport={{ once: true, margin: "-10%" }}
                 transition={{ duration: 0.8, ease, delay: i * 0.06 }}
               >
-                <h3 className="mb-2 font-display text-lg italic text-gold-light">
+                <h3 className="mb-2 font-display text-lg italic text-indigo">
                   {block.title}
                 </h3>
-                <p className="max-w-prose leading-relaxed text-ivory-dim">
+                <p className="max-w-prose leading-relaxed text-ink-dim">
                   {block.body}
                 </p>
               </motion.div>
@@ -100,14 +100,14 @@ export function Founder() {
           </div>
 
           {/* Animated statistics */}
-          <div className="mt-12 grid grid-cols-3 gap-4 border-t border-ink-600 pt-8">
+          <div className="mt-12 grid grid-cols-3 gap-4 border-t border-canvas-shade pt-8">
             {FOUNDER.stats.map((stat) => (
               <div key={stat.label}>
                 <CountUp
                   value={stat.value}
-                  className="font-display text-3xl text-ivory sm:text-4xl"
+                  className="font-display text-3xl text-gradient-gold sm:text-4xl"
                 />
-                <p className="mt-2 text-xs uppercase tracking-widest text-ivory-mute">
+                <p className="mt-2 text-xs uppercase tracking-widest text-ink-mute">
                   {stat.label}
                 </p>
               </div>

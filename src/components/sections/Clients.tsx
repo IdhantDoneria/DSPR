@@ -10,7 +10,7 @@ export function Clients() {
   return (
     <section
       id="clients"
-      className="relative scroll-mt-24 overflow-hidden bg-ink-800/30 py-28 sm:py-36"
+      className="silk-ground relative scroll-mt-24 overflow-hidden bg-canvas-shade/40 py-28 sm:py-36"
     >
       <div className="container-luxe">
         <SectionHeading
@@ -23,7 +23,7 @@ export function Clients() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="mx-auto mt-5 max-w-xl text-center text-ivory-mute"
+          className="mx-auto mt-5 max-w-xl text-center text-ink-mute"
         >
           Over {`100+`} brands across weddings, lifestyle, travel, hospitality,
           food &amp; beverage, and kids &amp; parenting.
@@ -34,11 +34,11 @@ export function Clients() {
         {CLIENTS.categories.map((category, i) => (
           <div key={category.name}>
             <div className="container-luxe mb-5 flex items-center gap-4">
-              <span className="font-display text-sm italic text-gold">
+              <span className="font-display text-sm italic text-indigo-deep">
                 {category.name}
               </span>
-              <span className="h-px flex-1 bg-ink-600" />
-              <span className="text-xs tabular-nums text-ivory-mute">
+              <span className="h-px flex-1 bg-indigo/15" />
+              <span className="text-xs tabular-nums text-ink-mute">
                 {String(category.clients.length).padStart(2, "0")}
               </span>
             </div>
@@ -48,7 +48,11 @@ export function Clients() {
               duration={42 + i * 6}
             >
               {category.clients.map((name, j) => (
-                <Wordmark key={`${name}-${j}`} name={name} />
+                <Wordmark
+                  key={`${name}-${j}`}
+                  name={name}
+                  className="h-16 rounded-full border-indigo/12 bg-canvas-cool px-7 shadow-[0_18px_50px_-28px_rgba(28,26,71,0.35)] transition-transform duration-500 hover:-translate-y-1.5 hover:border-indigo/30"
+                />
               ))}
             </Marquee>
           </div>

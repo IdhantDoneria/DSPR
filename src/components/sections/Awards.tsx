@@ -16,7 +16,7 @@ export function Awards() {
   const lineScale = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
   return (
-    <section className="relative scroll-mt-24 bg-ink-800/30 py-28 sm:py-36">
+    <section className="silk-ground relative scroll-mt-24 py-28 sm:py-36">
       <div className="container-luxe">
         <SectionHeading
           label="Recognition"
@@ -26,10 +26,10 @@ export function Awards() {
 
         <div ref={ref} className="relative mx-auto mt-20 max-w-3xl">
           {/* Timeline rail */}
-          <div className="absolute left-0 top-0 h-full w-px bg-ink-600 sm:left-1/2">
+          <div className="absolute left-0 top-0 h-full w-px bg-indigo/25 sm:left-1/2">
             <motion.div
               style={{ scaleY: lineScale }}
-              className="h-full w-full origin-top bg-gold"
+              className="h-full w-full origin-top bg-indigo"
             />
           </div>
 
@@ -45,7 +45,7 @@ export function Awards() {
               >
                 {/* Node */}
                 <span
-                  className={`absolute left-0 top-2 h-3 w-3 -translate-x-[5px] rounded-full border border-gold bg-ink sm:left-auto ${
+                  className={`absolute left-0 top-2 h-3 w-3 -translate-x-[5px] rounded-full border border-indigo bg-canvas sm:left-auto ${
                     i % 2 === 0
                       ? "sm:right-0 sm:translate-x-[6px]"
                       : "sm:left-0 sm:-translate-x-[6px]"
@@ -57,13 +57,13 @@ export function Awards() {
                   viewport={{ once: true, margin: "-15%" }}
                   transition={{ duration: 0.8, ease }}
                 >
-                  <span className="font-display text-4xl text-gradient-gold sm:text-5xl">
+                  <span className="font-display text-4xl text-gold-amber sm:text-5xl">
                     {award.year}
                   </span>
-                  <h3 className="mt-3 font-display text-xl text-ivory">
+                  <h3 className="mt-3 font-display text-xl text-ink">
                     {award.title}
                   </h3>
-                  <p className="mt-1 text-sm uppercase tracking-widest text-ivory-mute">
+                  <p className="mt-1 text-sm uppercase tracking-widest text-ink-dim">
                     {award.org}
                   </p>
                 </motion.div>

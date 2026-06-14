@@ -80,13 +80,13 @@ export function Preloader() {
       {!done && (
         <motion.div
           key="preloader"
-          className="fixed inset-0 z-[10000] flex items-center justify-center bg-ink"
+          className="fixed inset-0 z-[10000] flex items-center justify-center bg-canvas"
           exit={{ y: "-100%" }}
           transition={{ duration: 1, ease: [0.76, 0, 0.24, 1] }}
         >
           <div className="relative flex w-full flex-col items-center justify-center px-6">
             {/* Narrative word cycle, then resolve to DSPR */}
-            <div className="relative h-[1.2em] overflow-hidden font-display text-4xl text-ivory sm:text-6xl">
+            <div className="relative h-[1.2em] overflow-hidden font-display text-4xl text-indigo-deep sm:text-6xl">
               <AnimatePresence mode="wait">
                 {count < 100 ? (
                   <motion.span
@@ -105,7 +105,7 @@ export function Preloader() {
                     initial={{ y: "100%", opacity: 0 }}
                     animate={{ y: "0%", opacity: 1 }}
                     transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                    className="block tracking-[0.2em] text-gradient-gold"
+                    className="block tracking-[0.2em] text-gradient-indigo"
                   >
                     DSPR
                   </motion.span>
@@ -114,15 +114,15 @@ export function Preloader() {
             </div>
 
             {/* Counter, pinned bottom-right of the viewport */}
-            <div className="pointer-events-none fixed bottom-8 right-8 font-display text-5xl tabular-nums text-ivory/80 sm:text-7xl">
+            <div className="pointer-events-none fixed bottom-8 right-8 font-display text-5xl tabular-nums text-indigo-deep/80 sm:text-7xl">
               {count}
               <span className="align-top text-xl text-gold">%</span>
             </div>
 
             {/* progress hairline */}
-            <div className="fixed bottom-0 left-0 h-px w-full bg-ink-500/40">
+            <div className="fixed bottom-0 left-0 h-px w-full bg-canvas-shade">
               <motion.div
-                className="h-full bg-gold"
+                className="h-full bg-indigo"
                 style={{ width: `${count}%` }}
               />
             </div>

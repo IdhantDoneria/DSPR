@@ -43,8 +43,9 @@ export function AmbientField({
       uSize: { value: 22 },
       uPixelRatio: { value: 1 },
       uMouse: { value: new THREE.Vector3() },
-      uColorA: { value: new THREE.Color("#9c7e45") },
-      uColorB: { value: new THREE.Color("#e4d2a4") },
+      // Indigo dust drifting toward warm gold — legible on the cream ground.
+      uColorA: { value: new THREE.Color("#2e2b73") },
+      uColorB: { value: new THREE.Color("#b98b3a") },
     }),
     []
   );
@@ -75,7 +76,7 @@ export function AmbientField({
         uniforms={uniforms}
         transparent
         depthWrite={false}
-        blending={THREE.AdditiveBlending}
+        blending={THREE.NormalBlending}
       />
     </points>
   );

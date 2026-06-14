@@ -44,7 +44,7 @@ export function Header() {
             <button
               onClick={() => scrollTo(0)}
               aria-label="DSPR — back to top"
-              className="font-display text-2xl font-semibold tracking-[0.2em] text-ivory"
+              className="font-display text-2xl font-semibold tracking-[0.2em] text-indigo-deep"
             >
               DSPR
             </button>
@@ -57,7 +57,7 @@ export function Header() {
                 <Magnetic strength={0.25}>
                   <button
                     onClick={() => handleNav(item.href)}
-                    className="group relative py-1 text-sm font-medium uppercase tracking-widest text-ivory-dim transition-colors hover:text-ivory"
+                    className="group relative py-1 text-sm font-medium uppercase tracking-widest text-ink-dim transition-colors hover:text-indigo"
                   >
                     {item.label}
                     <span className="absolute -bottom-0.5 left-0 h-px w-full origin-right scale-x-0 bg-gold transition-transform duration-500 ease-luxe group-hover:origin-left group-hover:scale-x-100" />
@@ -69,12 +69,13 @@ export function Header() {
 
           <div className="flex items-center gap-5">
             <Magnetic strength={0.3} cursor="hover">
-              <a
-                href={`mailto:${SITE.email}`}
-                className="hidden rounded-full border border-ivory/20 px-5 py-2 text-xs font-medium uppercase tracking-widest text-ivory transition-colors hover:border-gold hover:text-gold sm:inline-block"
+              <button
+                type="button"
+                onClick={() => handleNav("#contact")}
+                className="hidden rounded-full border border-indigo/30 px-5 py-2 text-xs font-medium uppercase tracking-widest text-indigo transition-colors hover:border-indigo hover:bg-indigo hover:text-canvas-cool sm:inline-block"
               >
-                Let's talk
-              </a>
+                Let&apos;s talk
+              </button>
             </Magnetic>
 
             {/* Hamburger (mobile) */}
@@ -86,14 +87,14 @@ export function Header() {
             >
               <span
                 className={cn(
-                  "h-px w-7 bg-ivory transition-all duration-300",
-                  isMenuOpen && "translate-y-[3.5px] rotate-45"
+                  "h-px w-7 transition-all duration-300",
+                  isMenuOpen ? "translate-y-[3.5px] rotate-45 bg-canvas" : "bg-ink"
                 )}
               />
               <span
                 className={cn(
-                  "h-px w-7 bg-ivory transition-all duration-300",
-                  isMenuOpen && "-translate-y-[3.5px] -rotate-45"
+                  "h-px w-7 transition-all duration-300",
+                  isMenuOpen ? "-translate-y-[3.5px] -rotate-45 bg-canvas" : "bg-ink"
                 )}
               />
             </button>
@@ -109,7 +110,7 @@ export function Header() {
             animate={{ clipPath: "inset(0 0 0% 0)" }}
             exit={{ clipPath: "inset(0 0 100% 0)" }}
             transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1] }}
-            className="fixed inset-0 z-40 flex flex-col justify-center bg-ink-800 px-8 lg:hidden"
+            className="fixed inset-0 z-40 flex flex-col justify-center bg-indigo-deep px-8 lg:hidden"
           >
             <ul className="flex flex-col gap-2">
               {NAV_ITEMS.map((item, i) => (
@@ -124,15 +125,15 @@ export function Header() {
                       ease: [0.16, 1, 0.3, 1],
                     }}
                     onClick={() => handleNav(item.href)}
-                    className="block font-display text-5xl text-ivory sm:text-6xl"
+                    className="block font-display text-5xl italic text-canvas sm:text-6xl"
                   >
                     {item.label}
                   </motion.button>
                 </li>
               ))}
             </ul>
-            <div className="mt-14 flex flex-col gap-1 text-sm text-ivory-mute">
-              <a href={`mailto:${SITE.email}`} className="hover:text-gold">
+            <div className="mt-14 flex flex-col gap-1 text-sm text-canvas/70">
+              <a href={`mailto:${SITE.email}`} className="transition-colors hover:text-gold-light">
                 {SITE.email}
               </a>
               <span>{SITE.location}</span>

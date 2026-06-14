@@ -1,9 +1,16 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { CONTACT, SITE } from "@/lib/data";
 import { Magnetic } from "@/components/ui/Magnetic";
+
+// Flowing 3D silk-cloth — DSPR's signature draped fabric, rendered in WebGL.
+const SilkBackdrop = dynamic(
+  () => import("@/components/three/SilkBackdrop").then((m) => m.SilkBackdrop),
+  { ssr: false }
+);
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -32,12 +39,12 @@ function Field({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder=" "
-        className="peer w-full border-b border-ink-500 bg-transparent pb-3 pt-6 text-ivory outline-none transition-colors focus:border-gold"
+        className="peer w-full rounded-md border border-indigo/20 bg-canvas-cool px-4 pb-3 pt-6 text-ink outline-none transition-colors placeholder:text-ink-mute focus:border-indigo"
         aria-required={required}
       />
       <label
         htmlFor={id}
-        className="pointer-events-none absolute left-0 top-6 text-ivory-mute transition-all duration-300 peer-focus:top-0 peer-focus:text-xs peer-focus:text-gold peer-[:not(:placeholder-shown)]:top-0 peer-[:not(:placeholder-shown)]:text-xs"
+        className="pointer-events-none absolute left-4 top-6 text-ink-mute transition-all duration-300 peer-focus:top-1.5 peer-focus:text-xs peer-focus:text-indigo peer-[:not(:placeholder-shown)]:top-1.5 peer-[:not(:placeholder-shown)]:text-xs"
       >
         {label}
         {required && <span className="text-gold"> *</span>}
@@ -80,13 +87,15 @@ export function Contact() {
   return (
     <section
       id="contact"
-      className="relative scroll-mt-24 overflow-hidden py-28 sm:py-36"
+      className="relative scroll-mt-24 overflow-hidden bg-gradient-to-b from-canvas to-canvas-warm py-28 sm:py-36"
     >
       {/* Mumbai influence concept — animated backdrop */}
       <div aria-hidden className="pointer-events-none absolute inset-0">
-        <div className="absolute left-1/2 top-1/2 h-[60vmax] w-[60vmax] -translate-x-1/2 -translate-y-1/2 animate-[float_9s_ease-in-out_infinite] rounded-full bg-gold/[0.06] blur-3xl" />
-        <div className="absolute bottom-0 left-0 h-[40vmax] w-[40vmax] rounded-full bg-gold-deep/[0.05] blur-3xl" />
-        <span className="absolute inset-x-0 bottom-0 select-none text-center font-display text-[26vw] font-semibold leading-none text-ivory/[0.03]">
+        <div className="absolute left-1/2 top-1/2 h-[60vmax] w-[60vmax] -translate-x-1/2 -translate-y-1/2 animate-[float_9s_ease-in-out_infinite] rounded-full bg-gold/[0.10] blur-3xl" />
+        <div className="absolute bottom-0 left-0 h-[40vmax] w-[40vmax] rounded-full bg-indigo/[0.06] blur-3xl" />
+        {/* 3D draped silk, masked into the lower-right so type stays legible */}
+        <SilkBackdrop className="absolute -right-[10%] top-0 h-full w-[70%] opacity-50 [mask-image:radial-gradient(70%_70%_at_70%_55%,black,transparent)]" />
+        <span className="absolute inset-x-0 bottom-0 select-none text-center font-display text-[26vw] font-semibold leading-none text-indigo/[0.05]">
           MUMBAI
         </span>
       </div>
@@ -96,7 +105,7 @@ export function Contact() {
           {/* Heading + form */}
           <div className="lg:col-span-7">
             <div className="mb-3 flex items-center gap-3">
-              <span className="h-px w-8 bg-gold/60" />
+              <span className="h-px w-8 bg-indigo/60" />
               <span className="eyebrow">Contact · Careers</span>
             </div>
             <motion.h2
@@ -108,20 +117,20 @@ export function Contact() {
             >
               {CONTACT.heading}
             </motion.h2>
-            <p className="mt-6 max-w-md text-ivory-dim">{CONTACT.intro}</p>
+            <p className="mt-6 max-w-md text-ink-dim">{CONTACT.intro}</p>
 
             {sent ? (
               <motion.div
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, ease }}
-                className="mt-12 rounded-xl border border-gold/30 bg-gold/5 p-8"
+                className="mt-12 rounded-xl border border-indigo/15 bg-canvas-cool p-8 shadow-[0_18px_50px_-28px_rgba(28,26,71,0.35)]"
               >
-                <p className="font-display text-2xl text-gold">Thank you.</p>
-                <p className="mt-2 text-ivory-dim">
+                <p className="font-display text-2xl text-indigo">Thank you.</p>
+                <p className="mt-2 text-ink-dim">
                   Your mail client should now be open. If not, write to us
                   directly at{" "}
-                  <a href={`mailto:${SITE.email}`} className="text-gold underline">
+                  <a href={`mailto:${SITE.email}`} className="text-indigo underline">
                     {SITE.email}
                   </a>
                   .
@@ -176,13 +185,13 @@ export function Contact() {
                   <Magnetic cursor="hover">
                     <button
                       type="submit"
-                      className="group relative inline-flex items-center gap-3 overflow-hidden rounded-full bg-gold px-9 py-4 font-medium uppercase tracking-widest text-ink transition-colors"
+                      className="group relative inline-flex items-center gap-3 overflow-hidden rounded-full bg-indigo px-9 py-4 font-medium uppercase tracking-widest text-canvas-cool transition-colors hover:bg-indigo-deep"
                     >
                       <span className="relative z-10">Submit</span>
                       <span className="relative z-10 transition-transform duration-500 group-hover:translate-x-1">
                         →
                       </span>
-                      <span className="absolute inset-0 origin-left scale-x-0 bg-gold-light transition-transform duration-500 ease-luxe group-hover:scale-x-100" />
+                      <span className="absolute inset-0 origin-left scale-x-0 bg-indigo-deep transition-transform duration-500 ease-luxe group-hover:scale-x-100" />
                     </button>
                   </Magnetic>
                 </div>
@@ -196,31 +205,31 @@ export function Contact() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-10%" }}
             transition={{ duration: 1, ease, delay: 0.15 }}
-            className="flex flex-col gap-10 lg:col-span-4 lg:col-start-9"
+            className="flex flex-col gap-10 rounded-2xl bg-indigo-deep p-9 text-canvas shadow-[0_28px_70px_-32px_rgba(28,26,71,0.55)] lg:col-span-4 lg:col-start-9"
           >
             <div>
-              <p className="eyebrow mb-4">Write to us</p>
+              <p className="eyebrow mb-4 text-gold-light">Write to us</p>
               <a
                 href={`mailto:${SITE.email}`}
-                className="font-display text-2xl text-ivory transition-colors hover:text-gold"
+                className="font-display text-2xl text-canvas transition-colors hover:text-gold-light"
               >
                 {SITE.email}
               </a>
             </div>
             <div>
-              <p className="eyebrow mb-4">Location</p>
-              <p className="font-display text-2xl text-ivory">
+              <p className="eyebrow mb-4 text-gold-light">Location</p>
+              <p className="font-display text-2xl text-canvas">
                 {CONTACT.location}
               </p>
             </div>
             <div>
-              <p className="eyebrow mb-4">Follow</p>
+              <p className="eyebrow mb-4 text-gold-light">Follow</p>
               <div className="flex flex-col gap-2">
                 <a
                   href={SITE.social.instagram}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-ivory-dim transition-colors hover:text-gold"
+                  className="text-canvas/80 transition-colors hover:text-gold-light"
                 >
                   Instagram — @hellodspr
                 </a>
@@ -228,7 +237,7 @@ export function Contact() {
                   href={SITE.social.facebook}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-ivory-dim transition-colors hover:text-gold"
+                  className="text-canvas/80 transition-colors hover:text-gold-light"
                 >
                   Facebook — DSPRIndia
                 </a>

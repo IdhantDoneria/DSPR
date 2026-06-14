@@ -29,7 +29,7 @@ export function TiltCard({
   // glare position (percent)
   const gx = useMotionValue(50);
   const gy = useMotionValue(50);
-  const glare = useMotionTemplate`radial-gradient(120px circle at ${gx}% ${gy}%, rgba(228,210,164,0.18), transparent 60%)`;
+  const glare = useMotionTemplate`radial-gradient(120px circle at ${gx}% ${gy}%, rgba(46,43,115,0.12), transparent 60%)`;
 
   const handleMove = (e: React.PointerEvent) => {
     const el = ref.current;

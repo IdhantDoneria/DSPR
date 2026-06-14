@@ -25,7 +25,7 @@ export function Media() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="mt-5 max-w-xl text-ivory-mute"
+          className="mt-5 max-w-xl text-ink-mute"
         >
           {MEDIA.intro}
         </motion.p>
@@ -44,11 +44,7 @@ export function Media() {
             >
               <TiltCard className="h-full w-full">
                 <div
-                  className="relative flex h-full w-full flex-col justify-between overflow-hidden rounded-2xl border border-ink-600 p-7 transition-colors duration-500 hover:border-gold/40"
-                  style={{
-                    background:
-                      "linear-gradient(150deg, #16130d 0%, #0e0c08 100%)",
-                  }}
+                  className="relative flex h-full w-full flex-col justify-between overflow-hidden rounded-2xl border border-indigo/10 bg-canvas-cool p-7 shadow-[0_18px_50px_-28px_rgba(28,26,71,0.35)] transition-colors duration-500 hover:border-indigo/25"
                 >
                   {/* floating ambient glow */}
                   <div
@@ -57,19 +53,19 @@ export function Media() {
                   />
 
                   <div className="flex items-start justify-between">
-                    <span className="text-xs uppercase tracking-widest text-ivory-mute">
+                    <span className="text-xs uppercase tracking-widest text-ink-mute">
                       Featured
                     </span>
-                    <span className="font-display text-sm text-gold">
+                    <span className="font-display text-sm text-indigo">
                       {String(i + 1).padStart(2, "0")}
                     </span>
                   </div>
 
                   <div style={{ transform: "translateZ(40px)" }}>
-                    <h3 className="font-display text-3xl leading-tight text-ivory sm:text-4xl">
+                    <h3 className="font-display text-3xl leading-tight text-ink sm:text-4xl">
                       {pub.name}
                     </h3>
-                    <p className="mt-2 text-sm text-ivory-dim">
+                    <p className="mt-2 text-sm text-ink-dim">
                       <span className="text-gold">×</span> {pub.collaboration}
                     </p>
                   </div>

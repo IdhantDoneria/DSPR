@@ -24,8 +24,8 @@ export function HeroCanvas({ quality }: { quality: Quality }) {
         depth: true,
       }}
     >
-      <color attach="background" args={["#0A0907"]} />
-      <fog attach="fog" args={["#0A0907", 14, 30]} />
+      <color attach="background" args={["#F4F1EA"]} />
+      <fog attach="fog" args={["#F4F1EA", 16, 34]} />
       <Suspense fallback={null}>
         <HeroScene quality={quality} />
       </Suspense>

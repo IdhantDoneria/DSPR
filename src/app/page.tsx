@@ -9,6 +9,7 @@ import { Services } from "@/components/sections/Services";
 import { Clients } from "@/components/sections/Clients";
 import { Media } from "@/components/sections/Media";
 import { Contact } from "@/components/sections/Contact";
+import { SectionDivider } from "@/components/ui/SectionDivider";
 
 export default function Home() {
   return (
@@ -16,12 +17,16 @@ export default function Home() {
       <Hero />
       <FeaturedStrip />
       <About />
+      <SectionDivider />
       <Founder />
       <Awards />
+      <SectionDivider />
       <Team />
       <Services />
+      <SectionDivider />
       <Clients />
       <Media />
+      <SectionDivider />
       <Contact />
     </Experience>
   );
