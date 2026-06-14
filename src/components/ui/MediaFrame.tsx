@@ -31,7 +31,7 @@ export function MediaFrame({
   return (
     <div
       className={cn(
-        "relative h-full w-full overflow-hidden bg-ink-700",
+        "relative h-full w-full overflow-hidden bg-canvas-cool border border-indigo/10 shadow-[0_18px_50px_-28px_rgba(28,26,71,0.35)]",
         rounded && "rounded-xl",
         className
       )}
@@ -52,7 +52,7 @@ export function MediaFrame({
           className="absolute inset-0"
           style={{
             background:
-              "radial-gradient(110% 80% at 30% 20%, #2a2418 0%, #14110c 60%, #0d0b07 100%)",
+              "radial-gradient(110% 80% at 30% 20%, #FBF9F4 0%, #EFEBE1 60%, #E6E1D4 100%)",
           }}
         >
           {/* faint editorial grid */}
@@ -61,17 +61,17 @@ export function MediaFrame({
             className="absolute inset-0 opacity-[0.12]"
             style={{
               backgroundImage:
-                "linear-gradient(#c6a66422 1px, transparent 1px), linear-gradient(90deg, #c6a66422 1px, transparent 1px)",
+                "linear-gradient(#2E2B7322 1px, transparent 1px), linear-gradient(90deg, #2E2B7322 1px, transparent 1px)",
               backgroundSize: "44px 44px",
             }}
           />
           {monogram && (
-            <span className="absolute inset-0 flex items-center justify-center font-display text-7xl text-gold/30 sm:text-8xl">
+            <span className="absolute inset-0 flex items-center justify-center font-display text-7xl text-indigo/30 sm:text-8xl">
               {monogram}
             </span>
           )}
           {caption && (
-            <span className="absolute bottom-4 left-5 font-display text-sm italic text-ivory-mute">
+            <span className="absolute bottom-4 left-5 font-display text-sm italic text-ink-mute">
               {caption}
             </span>
           )}

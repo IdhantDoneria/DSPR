@@ -65,12 +65,12 @@ export function InfluenceNetwork({
     () => ({
       uSize: { value: 26 },
       uPixelRatio: { value: 1 },
-      uColor: { value: new THREE.Color("#e4d2a4") },
+      uColor: { value: new THREE.Color("#2e2b73") },
     }),
     []
   );
 
-  const gold = useMemo(() => new THREE.Color("#c6a664"), []);
+  const gold = useMemo(() => new THREE.Color("#2e2b73"), []);
 
   useFrame((state, rawDelta) => {
     const delta = Math.min(rawDelta, 0.05);
@@ -159,7 +159,7 @@ export function InfluenceNetwork({
           vertexColors
           transparent
           depthWrite={false}
-          blending={THREE.AdditiveBlending}
+          blending={THREE.NormalBlending}
         />
       </lineSegments>
       <points geometry={nodeGeo}>
@@ -169,7 +169,7 @@ export function InfluenceNetwork({
           uniforms={nodeUniforms}
           transparent
           depthWrite={false}
-          blending={THREE.AdditiveBlending}
+          blending={THREE.NormalBlending}
         />
       </points>
     </group>

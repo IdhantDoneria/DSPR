@@ -4,13 +4,14 @@
 
 @layer base {
   :root {
-    --color-ink: #0a0907;
-    --color-ivory: #f4efe6;
-    --color-gold: #c6a664;
+    --color-canvas: #f4f1ea;
+    --color-ink: #16151a;
+    --color-indigo: #2e2b73;
+    --color-gold: #b98b3a;
   }
 
   * {
-    @apply border-ink-600;
+    @apply border-canvas-shade;
   }
 
   html {
@@ -18,11 +19,12 @@
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
     scroll-behavior: auto; /* Lenis owns smooth scroll */
-    background-color: var(--color-ink);
+    background-color: var(--color-canvas);
   }
 
   body {
-    @apply bg-ink text-ivory font-sans antialiased;
+    @apply bg-canvas text-ink font-sans antialiased;
+    background-image: var(--tw-gradient, none);
     overflow-x: hidden;
   }
 
@@ -42,8 +44,8 @@
   }
 
   ::selection {
-    background-color: var(--color-gold);
-    color: var(--color-ink);
+    background-color: var(--color-indigo);
+    color: #f4f1ea;
   }
 
   /* Custom scrollbar */
@@ -51,18 +53,18 @@
     width: 9px;
   }
   ::-webkit-scrollbar-track {
-    background: #0a0907;
+    background: #e7e1d4;
   }
   ::-webkit-scrollbar-thumb {
-    background: #3a332a;
+    background: #c3bcab;
     border-radius: 999px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #4a4234;
+    background: #2e2b73;
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-gold);
+    outline: 2px solid var(--color-indigo);
     outline-offset: 3px;
     border-radius: 2px;
   }
@@ -82,28 +84,65 @@
   }
 
   .eyebrow {
-    @apply font-sans text-xs uppercase tracking-widest text-gold;
+    @apply font-sans text-xs uppercase tracking-widest text-indigo;
   }
 
-  /* Glassmorphism surface */
+  /* Frosted silk surface — light card on the cream ground */
   .glass {
-    background: rgba(244, 239, 230, 0.04);
+    background: rgba(255, 255, 255, 0.55);
     backdrop-filter: blur(14px) saturate(120%);
     -webkit-backdrop-filter: blur(14px) saturate(120%);
-    border: 1px solid rgba(244, 239, 230, 0.08);
+    border: 1px solid rgba(46, 43, 115, 0.1);
+    box-shadow: 0 18px 50px -28px rgba(28, 26, 71, 0.35);
   }
 
   .hairline {
-    @apply border-t border-ink-600;
+    @apply border-t border-canvas-shade;
   }
 
-  /* Gold gradient text */
+  /* Indigo gradient text — the DSPR signature on headings/figures */
   .text-gradient-gold {
-    background: linear-gradient(120deg, #e4d2a4 0%, #c6a664 45%, #9c7e45 100%);
+    background: linear-gradient(120deg, #d9892f 0%, #b98b3a 40%, #8c6420 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
     color: transparent;
+  }
+
+  .text-gradient-indigo {
+    background: linear-gradient(120deg, #4a46a8 0%, #2e2b73 55%, #1c1a47 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  /* Silk-draped section ground (subtle woven sheen) */
+  .silk-ground {
+    background-color: #f4f1ea;
+    background-image:
+      radial-gradient(140% 120% at 50% -20%, #faf8f3 0%, #f4f1ea 45%, #e7e1d4 100%),
+      repeating-linear-gradient(
+        115deg,
+        rgba(255, 255, 255, 0.5) 0px,
+        rgba(255, 255, 255, 0) 2px,
+        rgba(231, 225, 212, 0.4) 4px
+      );
+    background-blend-mode: normal, soft-light;
+  }
+
+  /* The signature indigo divider rule between sections */
+  .indigo-rule {
+    height: 6px;
+    width: 100%;
+    background: linear-gradient(
+      90deg,
+      #1c1a47 0%,
+      #2e2b73 35%,
+      #4a46a8 50%,
+      #2e2b73 65%,
+      #1c1a47 100%
+    );
   }
 
   /* The little line-mask used by reveal animations */
@@ -155,7 +194,8 @@
   position: fixed;
   inset: -50%;
   z-index: 100;
-  opacity: 0.045;
+  opacity: 0.05;
+  mix-blend-mode: multiply;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   animation: grain-shift 8s steps(4) infinite;
   will-change: transform;

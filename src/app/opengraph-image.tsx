@@ -17,9 +17,9 @@ export default function OgImage() {
           alignItems: "center",
           justifyContent: "center",
           background:
-            "radial-gradient(120% 90% at 50% 0%, #16130d 0%, #0A0907 60%)",
+            "radial-gradient(120% 90% at 50% 0%, #FAF8F3 0%, #F4F1EA 55%, #E7E1D4 100%)",
           fontFamily: "Georgia, serif",
-          color: "#F4EFE6",
+          color: "#16151A",
         }}
       >
         <div
@@ -27,19 +27,26 @@ export default function OgImage() {
             fontSize: 56,
             letterSpacing: 8,
             textTransform: "uppercase",
-            color: "#C6A664",
+            color: "#2E2B73",
           }}
         >
           DSPR
         </div>
-        <div style={{ fontSize: 40, marginTop: 24, fontStyle: "italic" }}>
+        <div
+          style={{
+            fontSize: 40,
+            marginTop: 24,
+            fontStyle: "italic",
+            color: "#1C1A47",
+          }}
+        >
           {SITE.tagline}
         </div>
         <div
           style={{
             marginTop: 40,
             fontSize: 22,
-            color: "#8C857A",
+            color: "#6E6A5E",
             letterSpacing: 2,
           }}
         >
@@ -49,9 +56,10 @@ export default function OgImage() {
           style={{
             position: "absolute",
             bottom: 48,
-            width: 120,
-            height: 3,
-            background: "#C6A664",
+            width: 160,
+            height: 5,
+            background:
+              "linear-gradient(90deg, #1C1A47, #4A46A8 50%, #B98B3A)",
           }}
         />
       </div>

@@ -17,7 +17,7 @@ export function Experience({ children }: { children: ReactNode }) {
     <SmoothScrollProvider>
       <a
         href="#about"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[10001] focus:rounded-full focus:bg-gold focus:px-5 focus:py-2 focus:text-sm focus:text-ink"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[10001] focus:rounded-full focus:bg-indigo focus:px-5 focus:py-2 focus:text-sm focus:text-canvas-cool"
       >
         Skip to content
       </a>

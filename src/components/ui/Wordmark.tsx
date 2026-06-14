@@ -25,11 +25,11 @@ export function Wordmark({
       onPointerEnter={() => setCursor("hover")}
       onPointerLeave={resetCursor}
       className={cn(
-        "group/logo mx-3 flex h-20 min-w-[180px] items-center justify-center rounded-lg border border-ink-600/70 px-8 transition-colors duration-500 hover:border-gold/40",
+        "group/logo mx-3 flex h-20 min-w-[180px] items-center justify-center rounded-lg border border-indigo/15 px-8 transition-colors duration-500 hover:border-indigo/40",
         className
       )}
     >
-      <span className="whitespace-nowrap font-display text-xl tracking-wide text-ivory-mute transition-colors duration-500 group-hover/logo:text-gold">
+      <span className="whitespace-nowrap font-display text-xl tracking-wide text-ink-mute transition-colors duration-500 group-hover/logo:text-indigo">
         {name}
       </span>
     </div>

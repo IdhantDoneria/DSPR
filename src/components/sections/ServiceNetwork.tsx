@@ -29,8 +29,8 @@ export function ServiceNetwork({ service }: { service: Service }) {
     >
       <defs>
         <radialGradient id="nodeGlow" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="#e4d2a4" stopOpacity="0.9" />
-          <stop offset="100%" stopColor="#c6a664" stopOpacity="0" />
+          <stop offset="0%" stopColor="#2E2B73" stopOpacity="0.35" />
+          <stop offset="100%" stopColor="#2E2B73" stopOpacity="0" />
         </radialGradient>
       </defs>
 
@@ -49,9 +49,9 @@ export function ServiceNetwork({ service }: { service: Service }) {
             y1={c}
             x2={n.x}
             y2={n.y}
-            stroke="#c6a664"
+            stroke="#2E2B73"
             strokeWidth={0.75}
-            strokeOpacity={0.5}
+            strokeOpacity={0.45}
             initial={{ pathLength: 0, opacity: 0 }}
             animate={{ pathLength: 1, opacity: 0.5 }}
             transition={{ duration: 0.9, delay: 0.1 + i * 0.07, ease: "easeOut" }}
@@ -71,7 +71,7 @@ export function ServiceNetwork({ service }: { service: Service }) {
               cx={n.x}
               cy={n.y}
               r={3.5}
-              fill="#e4d2a4"
+              fill="#B98B3A"
               animate={{ r: [3.5, 5, 3.5] }}
               transition={{
                 duration: 2.4,
@@ -85,13 +85,13 @@ export function ServiceNetwork({ service }: { service: Service }) {
 
         {/* Central hub */}
         <circle cx={c} cy={c} r={30} fill="url(#nodeGlow)" />
-        <circle cx={c} cy={c} r={9} fill="#c6a664" />
+        <circle cx={c} cy={c} r={9} fill="#2E2B73" />
         <motion.circle
           cx={c}
           cy={c}
           r={9}
           fill="none"
-          stroke="#e4d2a4"
+          stroke="#B98B3A"
           strokeWidth={1}
           animate={{ r: [9, 26], opacity: [0.6, 0] }}
           transition={{ duration: 2.6, repeat: Infinity, ease: "easeOut" }}
