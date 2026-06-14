@@ -38,6 +38,16 @@ export function Hero() {
       {/* GPU particle universe (skipped for reduced-motion users). */}
       {!reduced && <HeroCanvas quality={isMobile ? "low" : "high"} />}
 
+      {/* Soft cream halo keeps the wordmark legible over the woven ribbons. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute left-1/2 top-1/2 z-[5] h-[80vmin] w-[80vmin] -translate-x-1/2 -translate-y-1/2 rounded-full"
+        style={{
+          background:
+            "radial-gradient(closest-side, rgba(244,241,234,0.78), rgba(244,241,234,0.32) 55%, transparent 75%)",
+        }}
+      />
+
       {/* Foreground composition */}
       <div className="container-luxe relative z-10 flex flex-col items-center text-center">
         <motion.p

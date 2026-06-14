@@ -69,12 +69,13 @@ export function Header() {
 
           <div className="flex items-center gap-5">
             <Magnetic strength={0.3} cursor="hover">
-              <a
-                href={`mailto:${SITE.email}`}
+              <button
+                type="button"
+                onClick={() => handleNav("#contact")}
                 className="hidden rounded-full border border-indigo/30 px-5 py-2 text-xs font-medium uppercase tracking-widest text-indigo transition-colors hover:border-indigo hover:bg-indigo hover:text-canvas-cool sm:inline-block"
               >
-                Let's talk
-              </a>
+                Let&apos;s talk
+              </button>
             </Magnetic>
 
             {/* Hamburger (mobile) */}

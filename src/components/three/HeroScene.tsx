@@ -5,6 +5,7 @@ import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import { AmbientField } from "./AmbientField";
 import { InfluenceNetwork } from "./InfluenceNetwork";
+import { SilkRibbons } from "./SilkRibbons";
 
 export type Quality = "high" | "low";
 
@@ -22,8 +23,8 @@ export function HeroScene({ quality }: { quality: Quality }) {
   const counts = useMemo(
     () =>
       quality === "high"
-        ? { ambient: 1900, nodes: 92 }
-        : { ambient: 700, nodes: 46 },
+        ? { ambient: 1300, nodes: 60 }
+        : { ambient: 520, nodes: 34 },
     [quality]
   );
 
@@ -54,6 +55,7 @@ export function HeroScene({ quality }: { quality: Quality }) {
 
   return (
     <group ref={groupRef}>
+      <SilkRibbons quality={quality} />
       <AmbientField count={counts.ambient} mouse={mouseWorld} />
       <InfluenceNetwork count={counts.nodes} mouse={mouseWorld} />
     </group>

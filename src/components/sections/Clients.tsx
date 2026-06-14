@@ -51,7 +51,7 @@ export function Clients() {
                 <Wordmark
                   key={`${name}-${j}`}
                   name={name}
-                  className="h-24 w-24 min-w-0 rounded-full border-indigo/12 bg-canvas-cool px-4 text-center shadow-[0_18px_50px_-28px_rgba(28,26,71,0.35)] transition-transform duration-500 hover:-translate-y-1.5 hover:rotate-3 hover:border-indigo/25"
+                  className="h-16 rounded-full border-indigo/12 bg-canvas-cool px-7 shadow-[0_18px_50px_-28px_rgba(28,26,71,0.35)] transition-transform duration-500 hover:-translate-y-1.5 hover:border-indigo/30"
                 />
               ))}
             </Marquee>
