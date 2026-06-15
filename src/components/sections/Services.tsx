@@ -1,69 +1,145 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { gsap } from "@/lib/gsap";
-import { SERVICES } from "@/lib/data";
-import { useAppStore } from "@/lib/store";
-import { useMediaQuery } from "@/hooks/useMediaQuery";
+import { SERVICES, type Service } from "@/lib/data";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { scrollTo } from "@/components/providers/SmoothScrollProvider";
 import { cn } from "@/lib/utils";
 
 const ease = [0.16, 1, 0.3, 1] as const;
+const layoutTransition = { layout: { duration: 0.5, ease } };
 
-/** Signature gradient per craft — colour-codes each service on-brand. */
-const GRADIENTS = [
-  "linear-gradient(135deg,#1C1A47 0%,#2E2B73 100%)",
-  "linear-gradient(135deg,#2E2B73 0%,#4A46A8 100%)",
-  "linear-gradient(135deg,#2E2B73 0%,#B98B3A 100%)",
-  "linear-gradient(135deg,#4A46A8 0%,#D9892F 100%)",
-  "linear-gradient(135deg,#B98B3A 0%,#2E2B73 100%)",
-  "linear-gradient(135deg,#D9892F 0%,#1C1A47 100%)",
-];
+function ServiceCard({
+  service,
+  open,
+  onToggle,
+}: {
+  service: Service;
+  open: boolean;
+  onToggle: () => void;
+}) {
+  return (
+    <motion.li
+      layout
+      transition={layoutTransition}
+      className={cn(
+        "group relative overflow-hidden rounded-2xl border transition-[border-color,box-shadow] duration-500 ease-luxe",
+        // The open card becomes the 2x2 feature tile; closed cards are uniform.
+        open
+          ? "border-indigo/30 bg-indigo/[0.05] shadow-[0_28px_60px_-32px_rgba(28,26,71,0.55)] sm:col-span-2 lg:col-span-2 lg:row-span-2"
+          : "border-indigo/12 bg-canvas-cool shadow-[0_10px_30px_-22px_rgba(28,26,71,0.45)] hover:-translate-y-1 hover:border-indigo/30 hover:shadow-[0_28px_60px_-32px_rgba(28,26,71,0.55)]"
+      )}
+    >
+      {/* gold accent rail — cheap transform on hover / when open */}
+      <span
+        aria-hidden
+        className={cn(
+          "absolute inset-x-0 top-0 h-[3px] origin-left bg-gradient-to-r from-gold via-gold-amber to-indigo-light transition-transform duration-500 ease-luxe",
+          open ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
+        )}
+      />
 
-const CARD_W = 380;
+      <button
+        type="button"
+        onClick={onToggle}
+        aria-expanded={open}
+        className={cn(
+          "flex w-full flex-col text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo/40",
+          open ? "p-6 sm:p-8" : "h-full p-6 sm:p-7"
+        )}
+      >
+        <motion.div layout="position" className="flex items-center justify-between">
+          <span className="font-display text-sm tabular-nums text-gradient-gold sm:text-base">
+            {service.index}
+          </span>
+          <span
+            aria-hidden
+            className={cn(
+              "font-display text-xl leading-none text-indigo transition-all duration-500 ease-luxe",
+              open ? "rotate-0 opacity-100" : "opacity-0 group-hover:opacity-100"
+            )}
+          >
+            {open ? "–" : "+"}
+          </span>
+        </motion.div>
+
+        <motion.h3
+          layout="position"
+          className={cn(
+            "mt-5 font-display italic text-indigo-deep transition-[font-size] duration-500 ease-luxe",
+            open ? "text-4xl sm:text-5xl" : "text-2xl sm:text-3xl"
+          )}
+        >
+          {service.title}
+        </motion.h3>
+        <motion.p
+          layout="position"
+          className="mt-2 font-display text-[15px] italic text-gold-deep sm:text-base"
+        >
+          {service.tagline}
+        </motion.p>
+
+        {!open && (
+          <motion.span
+            layout="position"
+            className="mt-auto pt-6 text-[11px] font-medium uppercase tracking-widest text-indigo/70"
+          >
+            {service.items.length} capabilities
+            <span aria-hidden className="ml-2 text-indigo">+</span>
+          </motion.span>
+        )}
+      </button>
+
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            key="detail"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1, transition: { duration: 0.45, delay: 0.12, ease } }}
+            exit={{ opacity: 0, transition: { duration: 0.2 } }}
+            className="px-6 pb-7 sm:px-8 sm:pb-8"
+          >
+            {/* two vertical columns — fills the wide tile, no ragged whitespace */}
+            <ul className="grid grid-cols-1 gap-x-8 gap-y-2.5 sm:grid-cols-2">
+              {service.items.map((cap) => (
+                <li
+                  key={cap}
+                  className="flex items-center gap-2.5 text-sm text-ink-dim sm:text-[15px]"
+                >
+                  <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-gold" />
+                  {cap}
+                </li>
+              ))}
+            </ul>
+            <button
+              type="button"
+              onClick={() => scrollTo("#contact", -80)}
+              className="mt-7 inline-flex items-center gap-2 text-xs font-medium uppercase tracking-widest text-indigo transition-colors hover:text-indigo-deep"
+            >
+              Enquire
+              <span aria-hidden className="transition-transform duration-500 ease-luxe group-hover:translate-x-1">
+                →
+              </span>
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.li>
+  );
+}
 
 export function Services() {
-  const canHover = useMediaQuery("(hover: hover) and (pointer: fine)");
-  const [hovered, setHovered] = useState<number | null>(null);
-  const [open, setOpen] = useState<number | null>(null);
-  const setCursor = useAppStore((s) => s.setCursor);
-  const resetCursor = useAppStore((s) => s.resetCursor);
+  const [open, setOpen] = useState<string | null>(null);
 
-  const listRef = useRef<HTMLUListElement>(null);
-  const previewRef = useRef<HTMLDivElement>(null);
-  const xTo = useRef<((v: number) => void) | null>(null);
-  const yTo = useRef<((v: number) => void) | null>(null);
-
-  // Buttery cursor-follow for the floating preview (desktop only).
-  useEffect(() => {
-    if (!canHover || !previewRef.current) return;
-    xTo.current = gsap.quickTo(previewRef.current, "x", {
-      duration: 0.5,
-      ease: "power3",
-    }) as (v: number) => void;
-    yTo.current = gsap.quickTo(previewRef.current, "y", {
-      duration: 0.5,
-      ease: "power3",
-    }) as (v: number) => void;
-  }, [canHover]);
-
-  const place = (e: React.MouseEvent, immediate = false) => {
-    const card = previewRef.current;
-    if (!card) return;
-    const h = (card.firstElementChild as HTMLElement)?.offsetHeight ?? 420;
-    const x = Math.min(e.clientX + 28, window.innerWidth - CARD_W - 16);
-    const y = Math.min(Math.max(e.clientY - 40, 16), window.innerHeight - h - 16);
-    if (immediate) {
-      gsap.set(card, { x, y });
-    } else {
-      xTo.current?.(x);
-      yTo.current?.(y);
-    }
-  };
-
-  const preview = hovered != null ? SERVICES.items[hovered] : null;
+  // The open card renders first so the 2x2 tile anchors top-left and the five
+  // remaining cards fill the grid exactly (4 + 5 = a clean 3x3, no gaps).
+  const ordered = open
+    ? [
+        SERVICES.items.find((s) => s.id === open)!,
+        ...SERVICES.items.filter((s) => s.id !== open),
+      ]
+    : SERVICES.items;
 
   return (
     <section
@@ -83,200 +159,25 @@ export function Services() {
           turning attention into measurable growth.
         </motion.p>
 
-        <ul
-          ref={listRef}
-          className="mx-auto mt-16 max-w-4xl border-t border-indigo/12"
-          onMouseLeave={() => {
-            if (canHover) {
-              setHovered(null);
-              resetCursor();
-            }
-          }}
-          onMouseMove={(e) => canHover && hovered != null && place(e)}
+        <motion.ul
+          layout
+          transition={layoutTransition}
+          className="mx-auto mt-14 grid max-w-5xl auto-rows-fr grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
         >
-          {SERVICES.items.map((s, i) => {
-            const isOpen = open === i;
-            const isActive = canHover ? hovered === i : isOpen;
-            return (
-              <li key={s.id} className="border-b border-indigo/12">
-                <button
-                  onMouseEnter={(e) => {
-                    if (!canHover) return;
-                    if (hovered == null) place(e, true);
-                    setHovered(i);
-                    setCursor("hover");
-                  }}
-                  onClick={() => {
-                    if (canHover) scrollTo("#contact", -80);
-                    else setOpen(isOpen ? null : i);
-                  }}
-                  aria-expanded={!canHover ? isOpen : undefined}
-                  className="group relative flex w-full items-center overflow-hidden py-7 text-left sm:py-8"
-                >
-                  {/* hover sweep */}
-                  <span
-                    aria-hidden
-                    className={cn(
-                      "absolute inset-0 origin-left bg-gradient-to-r from-gold/[0.12] via-indigo/[0.05] to-transparent transition-transform duration-700 ease-luxe",
-                      isActive ? "scale-x-100" : "scale-x-0"
-                    )}
-                  />
-                  <span className="relative z-10 flex w-full items-center gap-5 px-1 sm:gap-7">
-                    <span
-                      className={cn(
-                        "font-display text-base tabular-nums transition-colors duration-500 sm:text-lg",
-                        isActive ? "text-gradient-gold" : "text-ink-mute"
-                      )}
-                    >
-                      {s.index}
-                    </span>
-                    <span
-                      className={cn(
-                        "font-display text-3xl italic transition-all duration-500 ease-luxe sm:text-5xl",
-                        isActive
-                          ? "translate-x-1 text-indigo-deep sm:translate-x-2"
-                          : "text-ink-mute group-hover:text-ink-dim"
-                      )}
-                    >
-                      {s.title}
-                    </span>
-                    <span className="ml-auto flex items-center gap-3 sm:gap-5">
-                      <span
-                        className={cn(
-                          "hidden text-[11px] uppercase tracking-widest transition-colors sm:inline",
-                          isActive ? "text-indigo" : "text-ink-mute/60"
-                        )}
-                      >
-                        {s.items.length} capabilities
-                      </span>
-                      <span
-                        aria-hidden
-                        className={cn(
-                          "font-display text-xl transition-all duration-500 ease-luxe",
-                          canHover
-                            ? isActive
-                              ? "translate-x-0 text-indigo opacity-100"
-                              : "-translate-x-2 text-ink-mute opacity-0"
-                            : "text-indigo"
-                        )}
-                      >
-                        {canHover ? "↗" : isOpen ? "–" : "+"}
-                      </span>
-                    </span>
-                  </span>
-                </button>
+          {ordered.map((s) => (
+            <ServiceCard
+              key={s.id}
+              service={s}
+              open={open === s.id}
+              onToggle={() => setOpen(open === s.id ? null : s.id)}
+            />
+          ))}
+        </motion.ul>
 
-                {/* Mobile / touch: inline accordion detail */}
-                {!canHover && (
-                  <AnimatePresence initial={false}>
-                    {isOpen && (
-                      <motion.div
-                        key="detail"
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.5, ease }}
-                        className="overflow-hidden"
-                      >
-                        <div className="px-1 pb-8">
-                          <p className="font-display text-lg italic text-gradient-gold">
-                            {s.tagline}
-                          </p>
-                          <ul className="mt-4 grid grid-cols-2 gap-x-6 gap-y-2.5">
-                            {s.items.map((item) => (
-                              <li
-                                key={item}
-                                className="flex items-center gap-2 text-sm text-ink-dim"
-                              >
-                                <span className="h-1 w-1 shrink-0 rounded-full bg-gold" />
-                                {item}
-                              </li>
-                            ))}
-                          </ul>
-                          <button
-                            onClick={() => scrollTo("#contact", -80)}
-                            className="mt-6 inline-flex items-center gap-2 text-sm font-medium uppercase tracking-widest text-indigo"
-                          >
-                            Enquire <span aria-hidden>→</span>
-                          </button>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                )}
-              </li>
-            );
-          })}
-        </ul>
-
-        {canHover && (
-          <p className="mt-8 text-center text-xs uppercase tracking-[0.25em] text-ink-mute/70">
-            Hover to explore · click to start a conversation
-          </p>
-        )}
+        <p className="mt-10 text-center text-xs uppercase tracking-[0.25em] text-ink-mute/70">
+          Select a craft to explore · click again to close
+        </p>
       </div>
-
-      {/* Desktop floating preview — follows the cursor */}
-      {canHover && (
-        <div
-          ref={previewRef}
-          aria-hidden
-          className="pointer-events-none fixed left-0 top-0 z-[60] hidden will-change-transform lg:block"
-          style={{ width: CARD_W }}
-        >
-          <motion.div
-            animate={{
-              opacity: preview ? 1 : 0,
-              scale: preview ? 1 : 0.94,
-              y: preview ? 0 : 12,
-            }}
-            transition={{ duration: 0.4, ease }}
-            className="overflow-hidden rounded-2xl border border-indigo/15 bg-canvas-cool/95 shadow-[0_40px_90px_-40px_rgba(28,26,71,0.65)] backdrop-blur-md"
-          >
-            <AnimatePresence mode="wait">
-              {preview && (
-                <motion.div
-                  key={preview.id}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.25 }}
-                >
-                  {/* gradient header */}
-                  <div
-                    className="relative flex h-32 items-end overflow-hidden p-5"
-                    style={{ background: GRADIENTS[hovered ?? 0] }}
-                  >
-                    <span className="absolute -right-2 -top-6 font-display text-[7rem] font-semibold leading-none text-canvas/15">
-                      {preview.index}
-                    </span>
-                    <h3 className="relative font-display text-2xl italic text-canvas">
-                      {preview.title}
-                    </h3>
-                  </div>
-                  {/* body */}
-                  <div className="p-5">
-                    <p className="font-display text-base italic text-indigo-deep">
-                      {preview.tagline}
-                    </p>
-                    <ul className="mt-4 grid grid-cols-2 gap-x-5 gap-y-2">
-                      {preview.items.map((item) => (
-                        <li
-                          key={item}
-                          className="flex items-center gap-2 text-[13px] text-ink-dim"
-                        >
-                          <span className="h-1 w-1 shrink-0 rounded-full bg-gold" />
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </motion.div>
-        </div>
-      )}
     </section>
   );
 }
