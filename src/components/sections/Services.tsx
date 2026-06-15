@@ -1,114 +1,146 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { SERVICES, type Service } from "@/lib/data";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { scrollTo } from "@/components/providers/SmoothScrollProvider";
 import { cn } from "@/lib/utils";
 
 const ease = [0.16, 1, 0.3, 1] as const;
+const layoutTransition = { layout: { duration: 0.5, ease } };
 
-const container = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.07 } },
-};
-
-const item = {
-  hidden: { opacity: 0, y: 24 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease } },
-};
-
-/**
- * Bento layout: the first craft is the feature tile (wide + tall on desktop),
- * the last spans the footer row, the rest fill the asymmetric grid. Placement
- * is purely CSS spans so the grid reflows cleanly at every breakpoint.
- */
-const SPANS = [
-  "sm:col-span-2 lg:col-span-2 lg:row-span-2", // 01 — feature
-  "lg:col-span-1",
-  "lg:col-span-1",
-  "lg:col-span-1",
-  "lg:col-span-1",
-  "sm:col-span-2 lg:col-span-1", // 06
-];
-
-const MAX_TAGS = 4;
-
-function ServiceCard({ service, featured }: { service: Service; featured?: boolean }) {
-  const shown = featured ? service.items : service.items.slice(0, MAX_TAGS);
-  const extra = featured ? 0 : service.items.length - shown.length;
-
+function ServiceCard({
+  service,
+  open,
+  onToggle,
+}: {
+  service: Service;
+  open: boolean;
+  onToggle: () => void;
+}) {
   return (
-    <motion.li variants={item} className={cn("group", SPANS[Number(service.index) - 1])}>
+    <motion.li
+      layout
+      transition={layoutTransition}
+      className={cn(
+        "group relative overflow-hidden rounded-2xl border transition-[border-color,box-shadow] duration-500 ease-luxe",
+        // The open card becomes the 2x2 feature tile; closed cards are uniform.
+        open
+          ? "border-indigo/30 bg-indigo/[0.05] shadow-[0_28px_60px_-32px_rgba(28,26,71,0.55)] sm:col-span-2 lg:col-span-2 lg:row-span-2"
+          : "border-indigo/12 bg-canvas-cool shadow-[0_10px_30px_-22px_rgba(28,26,71,0.45)] hover:-translate-y-1 hover:border-indigo/30 hover:shadow-[0_28px_60px_-32px_rgba(28,26,71,0.55)]"
+      )}
+    >
+      {/* gold accent rail — cheap transform on hover / when open */}
+      <span
+        aria-hidden
+        className={cn(
+          "absolute inset-x-0 top-0 h-[3px] origin-left bg-gradient-to-r from-gold via-gold-amber to-indigo-light transition-transform duration-500 ease-luxe",
+          open ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
+        )}
+      />
+
       <button
         type="button"
-        onClick={() => scrollTo("#contact", -80)}
+        onClick={onToggle}
+        aria-expanded={open}
         className={cn(
-          "relative flex h-full w-full flex-col overflow-hidden rounded-2xl border border-indigo/12 p-6 text-left transition-[transform,box-shadow,border-color] duration-500 ease-luxe sm:p-7",
-          "shadow-[0_10px_30px_-22px_rgba(28,26,71,0.45)]",
-          "hover:-translate-y-1 hover:border-indigo/30 hover:shadow-[0_28px_60px_-32px_rgba(28,26,71,0.55)]",
-          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo/40",
-          featured ? "bg-indigo/[0.045]" : "bg-canvas-cool"
+          "flex w-full flex-col text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo/40",
+          open ? "p-6 sm:p-8" : "h-full p-6 sm:p-7"
         )}
       >
-        {/* gold accent rail — scales in on hover, cheap transform only */}
-        <span
-          aria-hidden
-          className="absolute inset-x-0 top-0 h-[3px] origin-left scale-x-0 bg-gradient-to-r from-gold via-gold-amber to-indigo-light transition-transform duration-500 ease-luxe group-hover:scale-x-100"
-        />
-
-        <div className="flex items-center justify-between">
+        <motion.div layout="position" className="flex items-center justify-between">
           <span className="font-display text-sm tabular-nums text-gradient-gold sm:text-base">
             {service.index}
           </span>
           <span
             aria-hidden
-            className="font-display text-lg text-indigo opacity-0 transition-all duration-500 ease-luxe -translate-x-2 group-hover:translate-x-0 group-hover:opacity-100"
+            className={cn(
+              "font-display text-xl leading-none text-indigo transition-all duration-500 ease-luxe",
+              open ? "rotate-0 opacity-100" : "opacity-0 group-hover:opacity-100"
+            )}
           >
-            ↗
+            {open ? "–" : "+"}
           </span>
-        </div>
+        </motion.div>
 
-        <h3
+        <motion.h3
+          layout="position"
           className={cn(
-            "mt-5 font-display italic text-indigo-deep transition-transform duration-500 ease-luxe group-hover:translate-x-0.5",
-            featured ? "text-4xl sm:text-5xl" : "text-2xl sm:text-3xl"
+            "mt-5 font-display italic text-indigo-deep transition-[font-size] duration-500 ease-luxe",
+            open ? "text-4xl sm:text-5xl" : "text-2xl sm:text-3xl"
           )}
         >
           {service.title}
-        </h3>
-        <p className="mt-2 font-display text-[15px] italic text-gold-deep sm:text-base">
+        </motion.h3>
+        <motion.p
+          layout="position"
+          className="mt-2 font-display text-[15px] italic text-gold-deep sm:text-base"
+        >
           {service.tagline}
-        </p>
+        </motion.p>
 
-        <ul className="mt-5 flex flex-wrap gap-2">
-          {shown.map((cap) => (
-            <li
-              key={cap}
-              className="rounded-full border border-indigo/12 bg-canvas/60 px-2.5 py-1 text-[11px] uppercase tracking-wide text-ink-dim"
-            >
-              {cap}
-            </li>
-          ))}
-          {extra > 0 && (
-            <li className="rounded-full px-2 py-1 text-[11px] uppercase tracking-wide text-indigo/70">
-              +{extra} more
-            </li>
-          )}
-        </ul>
-
-        <span className="mt-auto pt-6 inline-flex items-center gap-2 text-[11px] font-medium uppercase tracking-widest text-indigo">
-          Enquire
-          <span aria-hidden className="transition-transform duration-500 ease-luxe group-hover:translate-x-1">
-            →
-          </span>
-        </span>
+        {!open && (
+          <motion.span
+            layout="position"
+            className="mt-auto pt-6 text-[11px] font-medium uppercase tracking-widest text-indigo/70"
+          >
+            {service.items.length} capabilities
+            <span aria-hidden className="ml-2 text-indigo">+</span>
+          </motion.span>
+        )}
       </button>
+
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            key="detail"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1, transition: { duration: 0.45, delay: 0.12, ease } }}
+            exit={{ opacity: 0, transition: { duration: 0.2 } }}
+            className="px-6 pb-7 sm:px-8 sm:pb-8"
+          >
+            {/* two vertical columns — fills the wide tile, no ragged whitespace */}
+            <ul className="grid grid-cols-1 gap-x-8 gap-y-2.5 sm:grid-cols-2">
+              {service.items.map((cap) => (
+                <li
+                  key={cap}
+                  className="flex items-center gap-2.5 text-sm text-ink-dim sm:text-[15px]"
+                >
+                  <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-gold" />
+                  {cap}
+                </li>
+              ))}
+            </ul>
+            <button
+              type="button"
+              onClick={() => scrollTo("#contact", -80)}
+              className="mt-7 inline-flex items-center gap-2 text-xs font-medium uppercase tracking-widest text-indigo transition-colors hover:text-indigo-deep"
+            >
+              Enquire
+              <span aria-hidden className="transition-transform duration-500 ease-luxe group-hover:translate-x-1">
+                →
+              </span>
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.li>
   );
 }
 
 export function Services() {
+  const [open, setOpen] = useState<string | null>(null);
+
+  // The open card renders first so the 2x2 tile anchors top-left and the five
+  // remaining cards fill the grid exactly (4 + 5 = a clean 3x3, no gaps).
+  const ordered = open
+    ? [
+        SERVICES.items.find((s) => s.id === open)!,
+        ...SERVICES.items.filter((s) => s.id !== open),
+      ]
+    : SERVICES.items;
+
   return (
     <section
       id="services"
@@ -128,19 +160,22 @@ export function Services() {
         </motion.p>
 
         <motion.ul
-          variants={container}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: "-10%" }}
-          className="mx-auto mt-14 grid max-w-6xl auto-rows-fr grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3"
+          layout
+          transition={layoutTransition}
+          className="mx-auto mt-14 grid max-w-5xl auto-rows-fr grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
         >
-          {SERVICES.items.map((s, i) => (
-            <ServiceCard key={s.id} service={s} featured={i === 0} />
+          {ordered.map((s) => (
+            <ServiceCard
+              key={s.id}
+              service={s}
+              open={open === s.id}
+              onToggle={() => setOpen(open === s.id ? null : s.id)}
+            />
           ))}
         </motion.ul>
 
         <p className="mt-10 text-center text-xs uppercase tracking-[0.25em] text-ink-mute/70">
-          Select a craft to start a conversation
+          Select a craft to explore · click again to close
         </p>
       </div>
     </section>
