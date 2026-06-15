@@ -69,12 +69,14 @@
     border-radius: 2px;
   }
 
-  /* Hide the native cursor only on devices that actually have a custom one. */
-  @media (hover: hover) and (pointer: fine) {
-    html.has-custom-cursor,
-    html.has-custom-cursor * {
-      cursor: none !important;
-    }
+  /* Native system cursor everywhere; pointer on interactive elements. */
+  button:not(:disabled),
+  a[href],
+  [role="button"],
+  label[for],
+  summary,
+  select {
+    cursor: pointer;
   }
 }
 

@@ -3,14 +3,14 @@
 import type { ReactNode } from "react";
 import { SmoothScrollProvider } from "@/components/providers/SmoothScrollProvider";
 import { Preloader } from "@/components/ui/Preloader";
-import { Cursor } from "@/components/ui/Cursor";
 import { ScrollProgress } from "@/components/ui/ScrollProgress";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 
 /**
  * Client shell that wires the smooth-scroll context and global UI overlays
- * (preloader, custom cursor, grain, progress) around the page content.
+ * (preloader, grain, progress) around the page content. Uses the native
+ * system cursor.
  */
 export function Experience({ children }: { children: ReactNode }) {
   return (
@@ -23,7 +23,6 @@ export function Experience({ children }: { children: ReactNode }) {
       </a>
 
       <Preloader />
-      <Cursor />
       <ScrollProgress />
       <div className="grain-overlay" aria-hidden />
 

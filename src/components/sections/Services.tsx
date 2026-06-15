@@ -4,6 +4,7 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { SERVICES, type Service } from "@/lib/data";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { scrollTo } from "@/components/providers/SmoothScrollProvider";
 import { cn } from "@/lib/utils";
 
@@ -131,15 +132,18 @@ function ServiceCard({
 
 export function Services() {
   const [open, setOpen] = useState<string | null>(null);
+  // Only the multi-column grid (>=640px) needs the open tile pulled to the
+  // front to pack without gaps. On a single-column phone we keep source order
+  // so the tapped card expands in place instead of jumping to the top.
+  const isGrid = useMediaQuery("(min-width: 640px)");
 
-  // The open card renders first so the 2x2 tile anchors top-left and the five
-  // remaining cards fill the grid exactly (4 + 5 = a clean 3x3, no gaps).
-  const ordered = open
-    ? [
-        SERVICES.items.find((s) => s.id === open)!,
-        ...SERVICES.items.filter((s) => s.id !== open),
-      ]
-    : SERVICES.items;
+  const ordered =
+    open && isGrid
+      ? [
+          SERVICES.items.find((s) => s.id === open)!,
+          ...SERVICES.items.filter((s) => s.id !== open),
+        ]
+      : SERVICES.items;
 
   return (
     <section
