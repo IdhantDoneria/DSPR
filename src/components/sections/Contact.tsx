@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { CONTACT, SITE } from "@/lib/data";
 import { Magnetic } from "@/components/ui/Magnetic";
+import { gmailComposeUrl } from "@/lib/utils";
 
 // Flowing 3D silk-cloth — DSPR's signature draped fabric, rendered in WebGL.
 const SilkBackdrop = dynamic(
@@ -66,21 +67,22 @@ export function Contact() {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (form.company) return; // bot trap
-    const subject = encodeURIComponent(
-      form.subject || `New enquiry from ${form.name || "the website"}`
+    const subject =
+      form.subject || `New enquiry from ${form.name || "the website"}`;
+    const body = [
+      `Name: ${form.name}`,
+      `Email: ${form.email}`,
+      form.business && `Business: ${form.business}`,
+      "",
+      "Sent via dspr.in",
+    ]
+      .filter(Boolean)
+      .join("\n");
+    window.open(
+      gmailComposeUrl({ to: SITE.email, subject, body }),
+      "_blank",
+      "noopener,noreferrer"
     );
-    const body = encodeURIComponent(
-      [
-        `Name: ${form.name}`,
-        `Email: ${form.email}`,
-        form.business && `Business: ${form.business}`,
-        "",
-        "Sent via dspr.in",
-      ]
-        .filter(Boolean)
-        .join("\n")
-    );
-    window.location.href = `mailto:${SITE.email}?subject=${subject}&body=${body}`;
     setSent(true);
   };
 
@@ -128,9 +130,14 @@ export function Contact() {
               >
                 <p className="font-display text-2xl text-indigo">Thank you.</p>
                 <p className="mt-2 text-ink-dim">
-                  Your mail client should now be open. If not, write to us
+                  Gmail should now be open in a new tab. If not, write to us
                   directly at{" "}
-                  <a href={`mailto:${SITE.email}`} className="text-indigo underline">
+                  <a
+                    href={gmailComposeUrl({ to: SITE.email })}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-indigo underline"
+                  >
                     {SITE.email}
                   </a>
                   .
@@ -210,7 +217,9 @@ export function Contact() {
             <div>
               <p className="eyebrow mb-4 text-gold-light">Write to us</p>
               <a
-                href={`mailto:${SITE.email}`}
+                href={gmailComposeUrl({ to: SITE.email })}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="font-display text-2xl text-canvas transition-colors hover:text-gold-light"
               >
                 {SITE.email}
