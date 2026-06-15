@@ -6,7 +6,7 @@ import { NAV_ITEMS, SITE } from "@/lib/data";
 import { useAppStore } from "@/lib/store";
 import { scrollTo } from "@/components/providers/SmoothScrollProvider";
 import { Magnetic } from "@/components/ui/Magnetic";
-import { cn } from "@/lib/utils";
+import { cn, gmailComposeUrl } from "@/lib/utils";
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -133,7 +133,12 @@ export function Header() {
               ))}
             </ul>
             <div className="mt-14 flex flex-col gap-1 text-sm text-canvas/70">
-              <a href={`mailto:${SITE.email}`} className="transition-colors hover:text-gold-light">
+              <a
+                href={gmailComposeUrl({ to: SITE.email })}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="transition-colors hover:text-gold-light"
+              >
                 {SITE.email}
               </a>
               <span>{SITE.location}</span>
